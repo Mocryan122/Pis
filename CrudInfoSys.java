@@ -1,5 +1,5 @@
 import java.awt.EventQueue;
-
+import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel;
+
 
 public class CrudInfoSys {
 
@@ -42,6 +43,7 @@ public class CrudInfoSys {
 			}
 		});
 	}
+
 
 	/**
 	 * Create the application.
@@ -137,7 +139,7 @@ public class CrudInfoSys {
 		panel.add(lblNewLabel_4_2);
 
 		textSSN = new JTextField();
-		textSSN.setColumns(10);
+		textSSN.setColumns(10);	
 		textSSN.setBounds(342, 60, 185, 20);
 		panel.add(textSSN);
 
@@ -188,18 +190,43 @@ public class CrudInfoSys {
 		JButton btnCreate = new JButton("Create");
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String fName, mName, fmName, sfx, gender, dateOfBirth, SocialSecurityNumber, Nationality,
-						CurrentAddress;
+				String 
+				fName, 
+				mName, 
+				fmName,
+				sfx,
+				gender,
+				Nationality,
+				CurrentAddress;
+				String dateOfBirth; 
+				String Ssn;
 
 				fName = textFirstName.getText();
 				mName = textMiddleName.getText();
 				fmName = textFamilyName.getText();
 				dateOfBirth = textDoB.getText();
-				SocialSecurityNumber = textSSN.getText();
+				Ssn = textSSN.getText();
 				CurrentAddress = textCurrentAddress.getText();
 				Nationality = (String) boxNatl.getSelectedItem();
 				gender = (String) boxGender.getSelectedItem();
 				sfx = (String) boxSuffix.getSelectedItem();
+				
+				try{
+					String url = "jdbc:mysql://localhost:3306/demo";
+					String root = "root";
+					String pass = "";	
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection(url,root,pass);
+					Statement stmt = con.createStatement();
+					stmt.executeUpdate("INSERT into user(fname,lname,mname,suffix,address,nationality,Birthdate,ssn,gender)" + 
+					"Values('" +  fName + "', '" + fmName + "', '" + mName + "', '" + sfx + "', '" + CurrentAddress + "', '" + Nationality + "', '" + dateOfBirth + "', '" + Ssn + "', '" + gender + "')");
+					
+				   }
+					catch(Exception a){
+						a.printStackTrace();
+				   }
+
+				   System.out.println(fName +" "+ fmName + " " + mName);
 			}
 		});
 		btnCreate.setBounds(145, 11, 127, 23);

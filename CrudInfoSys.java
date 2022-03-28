@@ -55,12 +55,89 @@ public class CrudInfoSys {
 		});
 	}
 
+      public void fetch(){
+		try {
+			String url = "jdbc:mysql://localhost:3306/demo";
+			String root = "root";
+			String pass = "";	
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url,root,pass);
+			stmt = con.createStatement();
+			sql = "SELECT * from user " ;
+			rs = stmt.executeQuery(sql);
+			int q = 0;
 
+			// DefaultTableModel df = (DefaultTableModel)table.getModel();
+			// df.setRowCount(0);
+
+			JPanel panel_2 = new JPanel();
+			panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+			panel_2.setBounds(10, 331, 556, 158);
+			frame.getContentPane().add(panel_2);
+			panel_2.setLayout(null);
+
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setBounds(10, 11, 536, 136);
+			panel_2.add(scrollPane);
+		   
+			table = new JTable();
+
+		
+
+			while(rs.next()){
+				String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
+				
+				id =  rs.getString("id");
+				fname =  rs.getString("fname");
+				mname =  rs.getString("mname");
+				lname =  rs.getString("lname");
+				suffix =  rs.getString("suffix");
+				nationality =  rs.getString("nationality");
+				sex =  rs.getString("gender");
+				bday =  rs.getString("Birthdate");
+				address =  rs.getString("address");
+				ssn  =  rs.getString("ssn");
+
+				System.out.println("Id:" + id +
+					" Name: " + fname 
+				+" "+ mname
+				+" "+ lname
+				+" "+ suffix
+				+" |Nationality: "+ nationality
+				+" |Sex: "+ sex
+				+" |Birthdate: "+ bday
+				+" |Address: "+ address
+				+" |SSN: "+ ssn);
+			String [] data = {id,fname,mname, lname, suffix, sex, bday, nationality, ssn, address};
+			tableModel.addRow(data);
+			 }    
+
+		 if(table == null){
+			 table = new JTable(tableModel);
+              
+		 }else{
+			table.setModel(tableModel);
+
+		 }
+		
+			scrollPane.setViewportView(table);
+
+	} 
+		catch (Exception c) {
+			c.printStackTrace();
+		
+		}
+		  
+        
+
+	  }
 
 	public CrudInfoSys() {
 		initialize();
 	}
     
+	
+	
 	
 
 	/**
@@ -194,70 +271,7 @@ public class CrudInfoSys {
 		JButton btnView = new JButton("View");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					String url = "jdbc:mysql://localhost:3306/demo";
-			        String root = "root";
-			        String pass = "";	
-			        Class.forName("com.mysql.cj.jdbc.Driver");
-			        con = DriverManager.getConnection(url,root,pass);
-			        stmt = con.createStatement();
-					sql = "SELECT * from user " ;
-					rs = stmt.executeQuery(sql);
-					int q = 0;
-
-					// DefaultTableModel df = (DefaultTableModel)table.getModel();
-					// df.setRowCount(0);
-
-					JPanel panel_2 = new JPanel();
-		            panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		            panel_2.setBounds(10, 331, 556, 158);
-		            frame.getContentPane().add(panel_2);
-		            panel_2.setLayout(null);
-
-		            JScrollPane scrollPane = new JScrollPane();
-		            scrollPane.setBounds(10, 11, 536, 136);
-		            panel_2.add(scrollPane);
-		           
-					table = new JTable();
-
-				
-		
-					while(rs.next()){
-						String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
-						
-						id =  rs.getString("id");
-						fname =  rs.getString("fname");
-						mname =  rs.getString("mname");
-						lname =  rs.getString("lname");
-						suffix =  rs.getString("suffix");
-						nationality =  rs.getString("nationality");
-						sex =  rs.getString("gender");
-						bday =  rs.getString("Birthdate");
-						address =  rs.getString("address");
-						ssn  =  rs.getString("ssn");
-
-						System.out.println("Id: " + id +
-							"Name: " + fname 
-						+" "+ mname
-						+" "+ lname
-						+" "+ suffix
-						+" |Nationality: "+ nationality
-						+" |Sex: "+ sex
-						+" |Birthdate: "+ bday
-						+" |Address: "+ address
-						+" |SSN: "+ ssn);
-					String [] data = {id,fname,mname, lname, suffix, sex, bday, nationality, ssn, address};
-					tableModel.addRow(data);
-                     }     
-				 table.setModel(tableModel);
-				
-					scrollPane.setViewportView(table);
-
-			} 
-				catch (Exception c) {
-					c.printStackTrace();
-				
-				}
+				fetch();
 
 
 			}

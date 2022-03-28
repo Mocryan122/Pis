@@ -31,8 +31,8 @@ public class CrudInfoSys {
 	private JTextField textCurrentAddress;
 	private JTable table; 
     
-	String[] col = {"First Name", "M. Name", "Fam. Name", "Suffix",
-	 "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"};
+	String[] col = {"ID","First Name", "M. Name", "Fam. Name", "Suffix",
+	 "Gender", "Date of Birth", "Nationality", "SSN", "Current Address"};
     DefaultTableModel tableModel = new DefaultTableModel(col,0);
 	
 	Connection con;
@@ -204,18 +204,23 @@ public class CrudInfoSys {
 					sql = "SELECT * from user " ;
 					rs = stmt.executeQuery(sql);
 					int q = 0;
+
 					// DefaultTableModel df = (DefaultTableModel)table.getModel();
 					// df.setRowCount(0);
-					JPanel panel_2 = new JPanel();
-		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_2.setBounds(10, 331, 556, 158);
-		frame.getContentPane().add(panel_2);
-		panel_2.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 11, 536, 136);
-		panel_2.add(scrollPane);
-		table = new JTable();
+					JPanel panel_2 = new JPanel();
+		            panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		            panel_2.setBounds(10, 331, 556, 158);
+		            frame.getContentPane().add(panel_2);
+		            panel_2.setLayout(null);
+
+		            JScrollPane scrollPane = new JScrollPane();
+		            scrollPane.setBounds(10, 11, 536, 136);
+		            panel_2.add(scrollPane);
+		           
+					table = new JTable();
+
+				
 		
 					while(rs.next()){
 						String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
@@ -231,7 +236,8 @@ public class CrudInfoSys {
 						address =  rs.getString("address");
 						ssn  =  rs.getString("ssn");
 
-						System.out.println("Name: " + fname 
+						System.out.println("Id: " + id +
+							"Name: " + fname 
 						+" "+ mname
 						+" "+ lname
 						+" "+ suffix
@@ -240,36 +246,13 @@ public class CrudInfoSys {
 						+" |Birthdate: "+ bday
 						+" |Address: "+ address
 						+" |SSN: "+ ssn);
-                    
-					    
-						table.setModel(new DefaultTableModel(
-						new Object[][] {
-							{fname, mname, lname, suffix, nationality, sex, bday, address, ssn},
-							
-						},
-						new String[] {
-							"First Name", "M. Name", "Fam. Name", "Suffix", "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"
-						}
-					));
+					String [] data = {id,fname,mname, lname, suffix, sex, bday, nationality, ssn, address};
+					tableModel.addRow(data);
+                     }     
+				 table.setModel(tableModel);
+				
 					scrollPane.setViewportView(table);
 
-
-					// 	Vector v2 = new Vector();
-					// for(int a=1; a<=q; a++){  
-				    //  v2.add(fname);
-					//   v2.add(mname);
-					//   v2.add(lname);
-					//   v2.add(suffix);
-					// }
-					// df.addRow(v2);
-
-
-
-
-			
-				
-					
-				}
 			} 
 				catch (Exception c) {
 					c.printStackTrace();

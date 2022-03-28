@@ -1,10 +1,14 @@
 import java.awt.EventQueue;
 import java.sql.*;
+import java.util.Vector;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -14,8 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.DefaultComboBoxModel;
-
+import javax.swing.DefaultComboBoxModel; 
 
 public class CrudInfoSys {
 
@@ -26,11 +29,19 @@ public class CrudInfoSys {
 	private JTextField textDoB;
 	private JTextField textSSN;
 	private JTextField textCurrentAddress;
-	private JTable table;
+	private JTable table; 
+    
+	String[] col = {"First Name", "M. Name", "Fam. Name", "Suffix",
+	 "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"};
+    DefaultTableModel tableModel = new DefaultTableModel(col,0);
+	
+	Connection con;
+	Statement stmt;
+	String sql;
+	ResultSet rs;
+     
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,17 +56,18 @@ public class CrudInfoSys {
 	}
 
 
-	/**
-	 * Create the application.
-	 */
+
 	public CrudInfoSys() {
 		initialize();
 	}
+    
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(240, 240, 240));
 		frame.setBounds(100, 100, 592, 539);
@@ -182,6 +194,89 @@ public class CrudInfoSys {
 		JButton btnView = new JButton("View");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					String url = "jdbc:mysql://localhost:3306/demo";
+			        String root = "root";
+			        String pass = "";	
+			        Class.forName("com.mysql.cj.jdbc.Driver");
+			        con = DriverManager.getConnection(url,root,pass);
+			        stmt = con.createStatement();
+					sql = "SELECT * from user " ;
+					rs = stmt.executeQuery(sql);
+					int q = 0;
+					// DefaultTableModel df = (DefaultTableModel)table.getModel();
+					// df.setRowCount(0);
+					JPanel panel_2 = new JPanel();
+		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_2.setBounds(10, 331, 556, 158);
+		frame.getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 536, 136);
+		panel_2.add(scrollPane);
+		table = new JTable();
+		
+					while(rs.next()){
+						String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
+						
+						id =  rs.getString("id");
+						fname =  rs.getString("fname");
+						mname =  rs.getString("mname");
+						lname =  rs.getString("lname");
+						suffix =  rs.getString("suffix");
+						nationality =  rs.getString("nationality");
+						sex =  rs.getString("gender");
+						bday =  rs.getString("Birthdate");
+						address =  rs.getString("address");
+						ssn  =  rs.getString("ssn");
+
+						System.out.println("Name: " + fname 
+						+" "+ mname
+						+" "+ lname
+						+" "+ suffix
+						+" |Nationality: "+ nationality
+						+" |Sex: "+ sex
+						+" |Birthdate: "+ bday
+						+" |Address: "+ address
+						+" |SSN: "+ ssn);
+                    
+					    
+						table.setModel(new DefaultTableModel(
+						new Object[][] {
+							{fname, mname, lname, suffix, nationality, sex, bday, address, ssn},
+							
+						},
+						new String[] {
+							"First Name", "M. Name", "Fam. Name", "Suffix", "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"
+						}
+					));
+					scrollPane.setViewportView(table);
+
+
+					// 	Vector v2 = new Vector();
+					// for(int a=1; a<=q; a++){  
+				    //  v2.add(fname);
+					//   v2.add(mname);
+					//   v2.add(lname);
+					//   v2.add(suffix);
+					// }
+					// df.addRow(v2);
+
+
+
+
+			
+				
+					
+				}
+			} 
+				catch (Exception c) {
+					c.printStackTrace();
+				
+				}
+
+
 			}
 		});
 		btnView.setBounds(10, 11, 125, 23);
@@ -213,22 +308,33 @@ public class CrudInfoSys {
 				
 				try{
 					String url = "jdbc:mysql://localhost:3306/demo";
-					String root = "root";
-					String pass = "";	
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					Connection con = DriverManager.getConnection(url,root,pass);
-					Statement stmt = con.createStatement();
-					stmt.executeUpdate("INSERT into user(fname,lname,mname,suffix,address,nationality,Birthdate,ssn,gender)" + 
-					"Values('" +  fName + "', '" + fmName + "', '" + mName + "', '" + sfx + "', '" + CurrentAddress + "', '" + Nationality + "', '" + dateOfBirth + "', '" + Ssn + "', '" + gender + "')");
-					
+			        String root = "root";
+			        String pass = "";	
+			        Class.forName("com.mysql.cj.jdbc.Driver");
+			        con = DriverManager.getConnection(url,root,pass);
+			        stmt = con.createStatement();
+
+					sql =  "INSERT into user(fname,lname,mname,suffix,address,nationality,Birthdate,ssn,gender)" + 
+					"Values('" +  fName + "', '" + fmName + "', '" + mName + "', '" + sfx + "', '" + CurrentAddress + "', '" + Nationality + "', '" + dateOfBirth + "', '" + Ssn + "', '" + gender + "')";
+					stmt.executeUpdate(sql);
 				   }
 					catch(Exception a){
 						a.printStackTrace();
 				   }
 
-				   System.out.println(fName +" "+ fmName + " " + mName);
+				   System.out.println(fName +" " 
+				   + mName+ " " 
+				   + fmName + " " + sfx + " " 
+				   + CurrentAddress + " " 
+				   + Nationality + " " 
+				   + gender + " "
+				   + dateOfBirth + " "
+				   + Ssn+ " ");
+				   
+
 			}
 		});
+
 		btnCreate.setBounds(145, 11, 127, 23);
 		panel_1.add(btnCreate);
 
@@ -239,6 +345,7 @@ public class CrudInfoSys {
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
 		btnDelete.setBounds(419, 11, 127, 23);
@@ -254,113 +361,18 @@ public class CrudInfoSys {
 		scrollPane.setBounds(10, 11, 536, 136);
 		panel_2.add(scrollPane);
 
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, "", null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"First Name", "M. Name", "Fam. Name", "Suffix", "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"
-			}
-		));
-		scrollPane.setViewportView(table);
+		// table = new JTable();
+		// table.setModel(new DefaultTableModel(
+		// 	new Object[][] {
+		// 		{null, "", null, null, null, null, null, null, null},
+		// 		{null, "", null, null, null, null, null, null, null},
+		// 		{null, "", null, null, null, null, null, null, null},
+		// 		{null, "", null, null, null, null, null, null, null},
+		// 	},
+		// 	new String[] {
+		// 		"First Name", "M. Name", "Fam. Name", "Suffix", "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"
+		// 	}
+		// ));
+		// scrollPane.setViewportView(table);
 	}
 }

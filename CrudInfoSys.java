@@ -1,14 +1,13 @@
+
 import java.awt.EventQueue;
 import java.sql.*;
 import java.util.Vector;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
@@ -39,6 +38,7 @@ public class CrudInfoSys {
 	Statement stmt;
 	String sql;
 	ResultSet rs;
+	private JTextField textSearchBar;
      
 
 
@@ -157,11 +157,11 @@ public class CrudInfoSys {
 
 		JLabel lblNewLabel_2_1_1 = new JLabel("Current Address");
 		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2_1_1.setBounds(10, 120, 226, 20);
+		lblNewLabel_2_1_1.setBounds(10, 154, 226, 20);
 		panel.add(lblNewLabel_2_1_1);
 
 		textCurrentAddress = new JTextField();
-		textCurrentAddress.setBounds(116, 121, 430, 88);
+		textCurrentAddress.setBounds(122, 155, 424, 88);
 		panel.add(textCurrentAddress);
 		textCurrentAddress.setColumns(10);
 
@@ -176,7 +176,7 @@ public class CrudInfoSys {
 				textCurrentAddress.setText(null);
 			}
 		});
-		btnClear.setBounds(457, 220, 89, 23);
+		btnClear.setBounds(441, 120, 89, 23);
 		panel.add(btnClear);
 		
 		JComboBox boxNatl = new JComboBox();
@@ -184,6 +184,25 @@ public class CrudInfoSys {
 		boxNatl.setMaximumRowCount(194);
 		boxNatl.setBounds(342, 89, 185, 22);
 		panel.add(boxNatl);
+		
+		textSearchBar = new JTextField();
+		textSearchBar.setBounds(37, 123, 281, 20);
+		panel.add(textSearchBar);
+		textSearchBar.setColumns(10);
+		
+		JButton btnSearch = new JButton("Find");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnSearch.setBounds(342, 120, 89, 23);
+		panel.add(btnSearch);
+		
+		JLabel lblNewLabel_2_1_1_1 = new JLabel("id");
+		lblNewLabel_2_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2_1_1_1.setBounds(10, 120, 226, 20);
+		panel.add(lblNewLabel_2_1_1_1);
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));

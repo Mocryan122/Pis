@@ -1,4 +1,3 @@
-
 import java.awt.EventQueue;
 import java.sql.*;
 import java.util.Vector;
@@ -66,6 +65,7 @@ public class CrudInfoSys {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 		
 		frame = new JFrame();
@@ -174,6 +174,9 @@ public class CrudInfoSys {
 				textDoB.setText(null);
 				textSSN.setText(null);
 				textCurrentAddress.setText(null);
+				boxSuffix.setSelectedItem("None.");
+				boxGender.setSelectedItem("None.");
+				boxNatl.setSelectedItem("Afghan");
 			}
 		});
 		btnClear.setBounds(441, 120, 89, 23);

@@ -42,7 +42,8 @@ public class CrudInfoSys {
 	private JTextField textSearchBar;
      
 
-
+	//James Ryan A. Moccorro 
+	//Michael Don D. Alaiza
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -55,7 +56,9 @@ public class CrudInfoSys {
 			}
 		});
 	}
-
+	/**The code found bellow is one that allows us to connect to the database that is needed for the CRUD Program
+	This allows us to have a seemless connection and provides us easy access to the database
+	**/
 	public void Connections(){
 	
 			try {
@@ -72,7 +75,10 @@ public class CrudInfoSys {
 
 	}
 
-
+	/**The following next two codes that are found bellow are ones that function as the following
+	 * allow us to delete records found in the database
+	 *  and find records that are saved in the Database
+	 * */	
 	public void delete(int number){
     int id1 = number;  
 	try {
@@ -143,6 +149,11 @@ public class CrudInfoSys {
 	  }
 
       public void fetch(){
+		  /**
+		   * The following code found in the 'fetch' function
+		   * is a function that allows us. The user to be able to  
+		   * see, and access the table and might as well do changes found in them.
+		   */
 		  tableModel.setRowCount(0);
 		try {
 			String url = "jdbc:mysql://localhost:3306/demo";
@@ -165,7 +176,10 @@ public class CrudInfoSys {
 			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setBounds(10, 11, 536, 136);
 			panel_2.add(scrollPane);
-		   
+		   /**
+			* The code found bellow allows us to be able to implement changes in the table
+			and display the information that was either Deleted, Updated, Created, or even tried to find.
+		    */
 			table = new JTable();
            while(rs.next()){
 				String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
@@ -226,6 +240,12 @@ public class CrudInfoSys {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
+	 /**
+	  * the following codes found below are Buttons, Panel Frames, etc.
+	  But the highlight for the codes found below are ones that are implemented with 
+	  action event listeners.
+	  */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void initialize() {
 
@@ -340,8 +360,20 @@ public class CrudInfoSys {
 		panel.add(textCurrentAddress);
 		textCurrentAddress.setColumns(10);
 
-
+		/**
+		 * All of the input fields(Text Field Codes) are ones that guide the user, The text fields are ones 
+		 * are ones that allow user input such as strings and ints,
+		 * also, the approximate positioning is also included for reference for future 
+		 * researchers and people who wish to use this as an inherited code. 
+		 */
 		JComboBox boxNatl = new JComboBox();
+		/**
+		 * Some codes found below contain the ComboBox,
+		 * this Java function allows us to be able to 
+		 * select One or more choices (Such matters to be of examples would be. Gender, Phone numbers, Nationality,
+		 * country, etc.)
+		 * Hence, to reiterate in an expansive form, the function for those with ComboBoxes are ones that allow us to choose pre inputed 
+		 */
 		boxNatl.setModel(new DefaultComboBoxModel(new String[] 	
 		{"Afghan", "Albanian", "Algerian", "American", 
 		"Andorran", "Angolan", "Antiguans", "Argentinean", 
@@ -349,32 +381,36 @@ public class CrudInfoSys {
 		"Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", 
 		"Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", 
 		"Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe",
-		 "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", 
-		 "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese",
-		  "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican",
-		   "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean",
-		   "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", 
-		   "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian",
-		    "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", 
-			"Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan",
-			 "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", 
-			 "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", 
-			 "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian",
-			  "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", 
-			  "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", 
-			  "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan",
-			   "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", 
-			   "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", 
-			   "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", 
-			   "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", 
-			   "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", 
-			   "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean"}));
+		"Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", 
+		"Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese",
+		"Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican",
+		"Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean",
+		"Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", 
+		"German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian",
+		"Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", 
+		"Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan",
+		"Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", 
+		 "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", 
+		 "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian",
+		  "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", 
+		  "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", 
+		  "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan",
+		   "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", 
+		   "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", 
+		   "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", 
+		   "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", 
+		   "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", 
+		   "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean"}));
 		boxNatl.setMaximumRowCount(194);
 		boxNatl.setBounds(342, 89, 185, 22);
 		panel.add(boxNatl);
 
 
-
+		/**
+		 * The clear button function sounds as is, it allows the user to instantly clear the input
+		 * he/she has placed unto the program. The code found bellow are just ones with SetText with values to Null
+		 * Thus allowing it to be fully cleared
+		 */
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -395,7 +431,13 @@ public class CrudInfoSys {
 		textSearchBar.setBounds(37, 123, 281, 20);
 		panel.add(textSearchBar);
 		textSearchBar.setColumns(10);
-		
+		/**
+		 * This button is the Find function. The code found below in the function
+		 * is as it sounds, it allows the User to find the Registered Entries found in the Database
+		 * You may notice that it has a try catch function.
+		 * This is because some buttons with action listeners require the access to a Database.
+		 * Thus the essence of a Crud Program
+		 */
 		JButton btnSearch = new JButton("Find");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -473,17 +515,25 @@ public class CrudInfoSys {
 		panel_1.setLayout(null);
 
 		JButton btnView = new JButton("View");
+		/**This is the button function View
+		 * its function is to be able to view the ALL registered entries. No deletion, no update, just displaying
+		 * the current registered data in the table. 
+		 */
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fetch();
-
-
 			}
 		});
 		btnView.setBounds(10, 11, 125, 23);
 		panel_1.add(btnView);
 
 		JButton btnCreate = new JButton("Create");
+		/**
+		 * This button is called the Create Function.
+		 * It allows the User to be able to create and send the inputted data found in the Input Textfields
+		 * You may notice that I have initialized Strings such as Fname and Sfx
+		 * This is because this allows us to get the inputs for each and every text field
+		 */
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String 
@@ -503,11 +553,19 @@ public class CrudInfoSys {
 				dateOfBirth = textDoB.getText();
 				Ssn = textSSN.getText();
 				CurrentAddress = textCurrentAddress.getText();
-				Nationality = (String) boxNatl.getSelectedItem();
+				/**
+				 * If you notice, the ComboBox(Or Multiple Items, Single Choice Box) 
+				 * it is  not a Get Text but GetSelectedItem.
+				 * This is because we get the selected Pre Inputed choice 
+				 */
+				Nationality = (String) boxNatl.getSelectedItem(); 
 				gender = (String) boxGender.getSelectedItem();
 				sfx = (String) boxSuffix.getSelectedItem();
 				
 				try{
+					/**
+					 * again another line of code, that allows us to Save the input and save it to the Database.
+					 */
 					String url = "jdbc:mysql://localhost:3306/demo";
 			        String root = "root";
 			        String pass = "";	
@@ -533,7 +591,7 @@ public class CrudInfoSys {
 				   + dateOfBirth + " "
 				   + Ssn+ " ");
 
-				     // for clearing textfield after the process
+				     // for clearing textfield after the process.
 					 textFirstName.setText(null);
 					 textMiddleName.setText(null);
 					 textFamilyName.setText(null);
@@ -543,14 +601,22 @@ public class CrudInfoSys {
 					 boxSuffix.setSelectedItem(null);
 					 boxGender.setSelectedItem(null);
 					 boxNatl.setSelectedItem(null);	
-				   
+				   /**
+					* Note: The "Clear Button" Function, functions differently as ones found in the
+					Delete, Create, and Update functions.
+					This allows the next user to be able to use the program with Clear Fields. After clicking 
+					the afforementioned buttons they automatcially clear out the input fields.
+				    */
 
 			}
 		});
 
 		btnCreate.setBounds(145, 11, 127, 23);
 		panel_1.add(btnCreate);
-
+		/**
+		 * The Button Function found bellow is called the Update Function.
+		 * It allows the user to update the pre existing Users profile should there be a need for one.
+		 */
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(282, 11, 127, 23);
 		btnUpdate.addActionListener(new ActionListener() {
@@ -629,7 +695,10 @@ public class CrudInfoSys {
 
 			
 		panel_1.add(btnUpdate);
-
+		/**
+		 * The Delete Function is one that allows the Database user to be 
+		 * able to delete a pre existing record should there be a need for one.
+		 */
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

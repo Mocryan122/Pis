@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.DefaultComboBoxModel; 
+import javax.swing.JOptionPane;
 
 public class CrudInfoSys {
 
@@ -71,6 +72,29 @@ public class CrudInfoSys {
 
 	}
 
+
+	public void delete(int number){
+    int id1 = number;  
+	try {
+		String url = "jdbc:mysql://localhost:3306/demo";
+		String root = "root";
+		String pass = "";	
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		con = DriverManager.getConnection(url,root,pass);
+		stmt = con.createStatement();
+		sql = "DELETE from user WHERE id =' " + id1 + "  '" ;
+		stmt.executeUpdate(sql);
+		if(rs.next()){
+					System.out.println("deleted");
+			
+				 }	
+
+	 } catch (Exception e) {
+		e.printStackTrace();
+	 }
+
+	}
+
 	  public void find(int a){
 		  int find = a;
 	  
@@ -117,7 +141,9 @@ public class CrudInfoSys {
 
 
 	  }
+
       public void fetch(){
+		  tableModel.setRowCount(0);
 		try {
 			String url = "jdbc:mysql://localhost:3306/demo";
 			String root = "root";
@@ -141,10 +167,7 @@ public class CrudInfoSys {
 			panel_2.add(scrollPane);
 		   
 			table = new JTable();
-
-		
-
-			while(rs.next()){
+           while(rs.next()){
 				String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
 				
 				id =  rs.getString("id");
@@ -317,6 +340,41 @@ public class CrudInfoSys {
 		panel.add(textCurrentAddress);
 		textCurrentAddress.setColumns(10);
 
+
+		JComboBox boxNatl = new JComboBox();
+		boxNatl.setModel(new DefaultComboBoxModel(new String[] 	
+		{"Afghan", "Albanian", "Algerian", "American", 
+		"Andorran", "Angolan", "Antiguans", "Argentinean", 
+		"Armenian", "Australian", "Austrian", "Azerbaijani", 
+		"Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", 
+		"Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", 
+		"Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe",
+		 "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", 
+		 "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese",
+		  "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican",
+		   "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean",
+		   "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", 
+		   "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian",
+		    "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", 
+			"Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan",
+			 "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", 
+			 "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", 
+			 "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian",
+			  "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", 
+			  "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", 
+			  "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan",
+			   "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", 
+			   "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", 
+			   "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", 
+			   "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", 
+			   "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", 
+			   "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean"}));
+		boxNatl.setMaximumRowCount(194);
+		boxNatl.setBounds(342, 89, 185, 22);
+		panel.add(boxNatl);
+
+
+
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -326,21 +384,13 @@ public class CrudInfoSys {
 				textDoB.setText(null);
 				textSSN.setText(null);
 				textCurrentAddress.setText(null);
-				boxSuffix.setSelectedItem("None.");
-				boxGender.setSelectedItem("None.");
-				boxNatl.setSelectedItem("Afghan");
+				boxSuffix.setSelectedItem(null);
+				boxGender.setSelectedItem(null);
+				boxNatl.setSelectedItem(null);
 			}
 		});
 		btnClear.setBounds(441, 120, 89, 23);
 		panel.add(btnClear);
-		
-			JComboBox boxNatl = new JComboBox();
-		boxNatl.setModel(new DefaultComboBoxModel(new String[] 	
-		{"Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean"}));
-		boxNatl.setMaximumRowCount(194);
-		boxNatl.setBounds(342, 89, 185, 22);
-		panel.add(boxNatl);
-		
 		textSearchBar = new JTextField();
 		textSearchBar.setBounds(37, 123, 281, 20);
 		panel.add(textSearchBar);
@@ -396,9 +446,10 @@ public class CrudInfoSys {
 				textDoB.setText(bday);
 				textSSN.setText(ssn);
 				textCurrentAddress.setText(address);
-				boxNatl.setModel(nationality);
-				boxGender.setText();
-				boxSuffix.setText();
+				boxSuffix.setSelectedItem(suffix);
+				boxGender.setSelectedItem(sex);
+				boxNatl.setSelectedItem(nationality);
+				
 			}	
 			
 				} catch (Exception a) {
@@ -467,6 +518,7 @@ public class CrudInfoSys {
 					sql =  "INSERT into user(fname,lname,mname,suffix,address,nationality,Birthdate,ssn,gender)" + 
 					"Values('" +  fName + "', '" + fmName + "', '" + mName + "', '" + sfx + "', '" + CurrentAddress + "', '" + Nationality + "', '" + dateOfBirth + "', '" + Ssn + "', '" + gender + "')";
 					stmt.executeUpdate(sql);
+					JOptionPane.showMessageDialog(null, "Successfully transfered");
 				   }
 					catch(Exception a){
 						a.printStackTrace();
@@ -480,6 +532,17 @@ public class CrudInfoSys {
 				   + gender + " "
 				   + dateOfBirth + " "
 				   + Ssn+ " ");
+
+				     // for clearing textfield after the process
+					 textFirstName.setText(null);
+					 textMiddleName.setText(null);
+					 textFamilyName.setText(null);
+					 textDoB.setText(null);
+					 textSSN.setText(null);
+					 textCurrentAddress.setText(null);
+					 boxSuffix.setSelectedItem(null);
+					 boxGender.setSelectedItem(null);
+					 boxNatl.setSelectedItem(null);	
 				   
 
 			}
@@ -490,15 +553,109 @@ public class CrudInfoSys {
 
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(282, 11, 127, 23);
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String idnum;
+				
+				idnum = textSearchBar.getText();
+				int idnum1 = Integer.parseInt(idnum);
+
+				System.out.println("Id#: "+ idnum1);
+				String 
+				fName, 
+				mName, 
+				fmName,
+				sfx,
+				gender,
+				Nationality,
+				CurrentAddress;
+				String dateOfBirth; 
+				String Ssn;
+
+				fName = textFirstName.getText();
+				mName = textMiddleName.getText();
+				fmName = textFamilyName.getText();
+				dateOfBirth = textDoB.getText();
+				Ssn = textSSN.getText();
+				CurrentAddress = textCurrentAddress.getText();
+				Nationality = (String) boxNatl.getSelectedItem();
+				gender = (String) boxGender.getSelectedItem();
+				sfx = (String) boxSuffix.getSelectedItem();
+				
+				try{
+					String url = "jdbc:mysql://localhost:3306/demo";
+			        String root = "root";
+			        String pass = "";	
+			        Class.forName("com.mysql.cj.jdbc.Driver");
+			        con = DriverManager.getConnection(url,root,pass);
+			        stmt = con.createStatement();
+
+					sql =  "UPDATE user SET fname ='" +  fName + "' ,lname = '" + fmName 
+					+ "',mname = '" + mName + "' ,suffix = '" + sfx 
+					+ "' ,address = '" + CurrentAddress + "',nationality = '" +
+					 Nationality + "' ,Birthdate ='" + 
+					 dateOfBirth + "' ,ssn ='" + Ssn + "' ,gender ='" + gender + "' WHERE id ='" + idnum1 + "' ";   
+					stmt.executeUpdate(sql);
+					JOptionPane.showMessageDialog(null, "Update Complete");
+				   }
+				   
+					catch(Exception a){
+						a.printStackTrace();
+				   }
+				   fetch();
+
+				   System.out.println(fName +" " 
+				   + mName+ " " 
+				   + fmName + " " + sfx + " " 
+				   + CurrentAddress + " " 
+				   + Nationality + " " 
+				   + gender + " "
+				   + dateOfBirth + " "
+				   + Ssn+ " ");
+				   
+            // for clearing textfield after the process
+				   textFirstName.setText(null);
+				   textMiddleName.setText(null);
+				   textFamilyName.setText(null);
+				   textDoB.setText(null);
+				   textSSN.setText(null);
+				   textCurrentAddress.setText(null);
+				   boxSuffix.setSelectedItem(null);
+				   boxGender.setSelectedItem(null);
+				   boxNatl.setSelectedItem(null);	
+
+			}
+		});
+
+			
 		panel_1.add(btnUpdate);
 
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				String idnum;
+				
+				idnum = textSearchBar.getText();
+				int idnum1 = Integer.parseInt(idnum);
+			    delete(idnum1);
+				System.out.println("Id#: "+ idnum1);
+				JOptionPane.showMessageDialog(null, "Deleted Successfully");
+				fetch();
+				 
+				/** for clearing textfield after the process */ 
+				  textFirstName.setText(null);
+				  textMiddleName.setText(null);
+				  textFamilyName.setText(null);
+				  textDoB.setText(null);
+				  textSSN.setText(null);
+				  textCurrentAddress.setText(null);
+				  boxSuffix.setSelectedItem(null);
+				  boxGender.setSelectedItem(null);
+				  boxNatl.setSelectedItem(null);	
 			}
 		});
-		btnDelete.setBounds(419, 11, 127, 23);
+
+		btnDelete.setBounds(419, 11, 127, 23);	
 		panel_1.add(btnDelete);
 
 		JPanel panel_2 = new JPanel();
@@ -507,10 +664,15 @@ public class CrudInfoSys {
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 
-		JScrollPane scrollPane = new JScrollPane();
+		JScrollPane scrollPane = new JScrollPane();	
 		scrollPane.setBounds(10, 11, 536, 136);
 		panel_2.add(scrollPane);
+
+
+		  
+
 
 	
 	}
 }
+

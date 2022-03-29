@@ -29,6 +29,7 @@ public class CrudInfoSys {
 	private JTextField textSSN;
 	private JTextField textCurrentAddress;
 	private JTable table; 
+
     
 	String[] col = {"ID","First Name", "M. Name", "Fam. Name", "Suffix",
 	 "Gender", "Date of Birth", "Nationality", "SSN", "Current Address"};
@@ -55,6 +56,68 @@ public class CrudInfoSys {
 		});
 	}
 
+	public void Connections(){
+	
+			try {
+				String url = "jdbc:mysql://localhost:3306/demo";
+				String root = "root";
+				String pass = "";	
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				con = DriverManager.getConnection(url,root,pass);
+				stmt = con.createStatement();
+		} catch (Exception e) {
+			e.printStackTrace();
+	
+		}
+
+	}
+
+	  public void find(int a){
+		  int find = a;
+	  
+	// 	try {
+	// 		String url = "jdbc:mysql://localhost:3306/demo";
+	// 		String root = "root";
+	// 		String pass = "";	
+	// 		Class.forName("com.mysql.cj.jdbc.Driver");
+	// 		con = DriverManager.getConnection(url,root,pass);
+	// 		stmt = con.createStatement();
+	// 		sql ="SELECT * from user WHERE id = ' " + find + "  ' ";
+	// 		rs = stmt.executeQuery(sql);
+	// 	 if(rs.next()){
+	// 		String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
+	// 		id =  rs.getString("id");
+	// 		fname =  rs.getString("fname");
+	// 		mname =  rs.getString("mname");
+	// 		lname =  rs.getString("lname");
+	// 		suffix =  rs.getString("suffix");
+	// 		nationality =  rs.getString("nationality");
+	// 		sex =  rs.getString("gender");
+	// 		bday =  rs.getString("Birthdate");
+	// 		address =  rs.getString("address");
+	// 		ssn  =  rs.getString("ssn");
+
+		 
+		 
+	// 		System.out.println("Id:" + id +
+	// 		" Name: " + fname 
+	// 	+" "+ mname
+	// 	+" "+ lname
+	// 	+" "+ suffix
+	// 	+" |Nationality: "+ nationality
+	// 	+" |Sex: "+ sex
+	// 	+" |Birthdate: "+ bday
+	// 	+" |Address: "+ address
+	// 	+" |SSN: "+ ssn);
+	// 	 }	
+	
+	// 	} catch (Exception e) {
+	// 		e.printStackTrace();
+	// }
+		  
+
+
+	  }
       public void fetch(){
 		try {
 			String url = "jdbc:mysql://localhost:3306/demo";
@@ -63,13 +126,11 @@ public class CrudInfoSys {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url,root,pass);
 			stmt = con.createStatement();
-			sql = "SELECT * from user " ;
+			sql = "SELECT * from user" ;
 			rs = stmt.executeQuery(sql);
-			int q = 0;
+	
 
-			// DefaultTableModel df = (DefaultTableModel)table.getModel();
-			// df.setRowCount(0);
-
+			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 			panel_2.setBounds(10, 331, 556, 158);
@@ -99,7 +160,7 @@ public class CrudInfoSys {
 				ssn  =  rs.getString("ssn");
 
 				System.out.println("Id:" + id +
-					" Name: " + fname 
+				 " Name: " + fname 
 				+" "+ mname
 				+" "+ lname
 				+" "+ suffix
@@ -144,6 +205,7 @@ public class CrudInfoSys {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(240, 240, 240));
@@ -151,61 +213,74 @@ public class CrudInfoSys {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel.setBounds(10, 11, 556, 254);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
+
 		JLabel lblNewLabel = new JLabel("First Name\r\n");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel.setBounds(10, 9, 68, 20);
 		panel.add(lblNewLabel);
+
 
 		JLabel lblNewLabel_1 = new JLabel("Middle Name");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_1.setBounds(10, 36, 77, 20);
 		panel.add(lblNewLabel_1);
 
+
 		JLabel lblNewLabel_2 = new JLabel("Family Name");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_2.setBounds(10, 59, 77, 20);
 		panel.add(lblNewLabel_2);
+
 
 		textFirstName = new JTextField();
 		textFirstName.setBounds(90, 9, 146, 20);
 		panel.add(textFirstName);
 		textFirstName.setColumns(10);
 
+
 		textMiddleName = new JTextField();
 		textMiddleName.setColumns(10);
 		textMiddleName.setBounds(90, 36, 146, 20);
 		panel.add(textMiddleName);
+
 
 		textFamilyName = new JTextField();
 		textFamilyName.setColumns(10);
 		textFamilyName.setBounds(90, 59, 146, 20);
 		panel.add(textFamilyName);
 
+
 		JLabel lblNewLabel_3 = new JLabel("Bio. Gender");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_3.setBounds(246, 12, 86, 14);
 		panel.add(lblNewLabel_3);
+
+
 
 		JLabel lblNewLabel_4 = new JLabel("Date of Birth");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_4.setBounds(246, 37, 86, 20);
 		panel.add(lblNewLabel_4);
 
+
 		JLabel lblNewLabel_2_1 = new JLabel("Suffix\r\n");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblNewLabel_2_1.setBounds(10, 89, 68, 20);
 		panel.add(lblNewLabel_2_1);
 
+
 		JComboBox boxSuffix = new JComboBox();
 		boxSuffix.setModel(new DefaultComboBoxModel(new String[] { "None.", "Jr.", "Sr." }));
 		boxSuffix.setBounds(90, 89, 146, 22);
 		panel.add(boxSuffix);
+
 
 		JComboBox boxGender = new JComboBox();
 		boxGender.setModel(new DefaultComboBoxModel(new String[] { "None.", "MALE", "FEMALE" }));
@@ -256,8 +331,9 @@ public class CrudInfoSys {
 		btnClear.setBounds(441, 120, 89, 23);
 		panel.add(btnClear);
 		
-		JComboBox boxNatl = new JComboBox();
-		boxNatl.setModel(new DefaultComboBoxModel(new String[] {"Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean"}));
+			JComboBox boxNatl = new JComboBox();
+		boxNatl.setModel(new DefaultComboBoxModel(new String[] 	
+		{"Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Israeli", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean"}));
 		boxNatl.setMaximumRowCount(194);
 		boxNatl.setBounds(342, 89, 185, 22);
 		panel.add(boxNatl);
@@ -270,7 +346,62 @@ public class CrudInfoSys {
 		JButton btnSearch = new JButton("Find");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String idnum;
 				
+				idnum = textSearchBar.getText();
+				int idnum1 = Integer.parseInt(idnum);
+			    find(idnum1);
+			
+				try {
+					String url = "jdbc:mysql://localhost:3306/demo";
+					String root = "root";
+					String pass = "";	
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					con = DriverManager.getConnection(url,root,pass);
+					stmt = con.createStatement();
+					sql ="SELECT * from user WHERE id = ' " + idnum1 + "  ' ";
+					rs = stmt.executeQuery(sql);
+				 if(rs.next()){
+					String id,fname,mname,lname,suffix,nationality,sex,bday,address,ssn;
+					id =  rs.getString("id");
+					fname =  rs.getString("fname");
+					mname =  rs.getString("mname");
+					lname =  rs.getString("lname");
+					suffix =  rs.getString("suffix");
+					nationality =  rs.getString("nationality");
+					sex =  rs.getString("gender");
+					bday =  rs.getString("Birthdate");
+					address =  rs.getString("address");
+					ssn  =  rs.getString("ssn");
+		
+				 
+				 
+					System.out.println("Id:" + id +
+				" Name: " + fname 
+				+" "+ mname
+				+" "+ lname
+				+" "+ suffix
+				+" |Nationality: "+ nationality
+				+" |Sex: "+ sex
+				+" |Birthdate: "+ bday
+				+" |Address: "+ address
+				+" |SSN: "+ ssn);
+				
+				textFirstName.setText(fname);
+				textMiddleName.setText(mname);
+				textFamilyName.setText(lname);
+				textDoB.setText(bday);
+				textSSN.setText(ssn);
+				textCurrentAddress.setText(address);
+				boxNatl.setModel(nationality);
+				boxGender.setText();
+				boxSuffix.setText();
+			}	
+			
+				} catch (Exception a) {
+					a.printStackTrace();
+			}
+			
 			}
 		});
 		btnSearch.setBounds(342, 120, 89, 23);
@@ -377,18 +508,6 @@ public class CrudInfoSys {
 		scrollPane.setBounds(10, 11, 536, 136);
 		panel_2.add(scrollPane);
 
-		// table = new JTable();
-		// table.setModel(new DefaultTableModel(
-		// 	new Object[][] {
-		// 		{null, "", null, null, null, null, null, null, null},
-		// 		{null, "", null, null, null, null, null, null, null},
-		// 		{null, "", null, null, null, null, null, null, null},
-		// 		{null, "", null, null, null, null, null, null, null},
-		// 	},
-		// 	new String[] {
-		// 		"First Name", "M. Name", "Fam. Name", "Suffix", "Gender", "Date of Birth", "Soc. Sec. Number", "Nationality", "Current Address"
-		// 	}
-		// ));
-		// scrollPane.setViewportView(table);
+	
 	}
 }
